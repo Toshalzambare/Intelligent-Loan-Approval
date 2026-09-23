@@ -17,6 +17,25 @@ We trained a **Random Forest Classifier**. Random Forests were chosen because th
 * **Hyperparameters:** `max_depth=15`, `random_state=42`
 * **Explainability Engine:** `shap.TreeExplainer`
 
+#### How the Random Forest Predicts
+Under the hood, our Random Forest algorithm builds an ensemble of multiple decision trees during training. Each tree is trained on a random subset of the data and a random subset of features. When making a prediction for a new loan application:
+1. **Tree Traversal:** The applicant's features (income, loan amount, etc.) are passed down every single tree in the forest.
+2. **Individual Votes:** Each tree evaluates the rules at its nodes (e.g., "Is `loan_percent_income` > 0.15?") and outputs a "vote" (Approve or Reject).
+3. **Aggregation:** The Random Forest averages the probability outputs of all the individual trees. If the aggregate probability of default (Class 1) is greater than 50%, the model rejects the loan. 
+
+#### Feature Importance (Gini Index)
+The model uses the Mean Decrease in Impurity (Gini Index) to determine how critical each feature is to the final decision across all trees. The top 10 most influential features driving the model's predictions are:
+1. `loan_percent_income`: **0.2064**
+2. `loan_int_rate`: **0.1283**
+3. `person_income`: **0.1222**
+4. `loan_grade_D`: **0.0758**
+5. `person_home_ownership_RENT`: **0.0642**
+6. `loan_amnt`: **0.0545**
+7. `person_emp_length`: **0.0421**
+8. `cb_person_cred_hist_length`: **0.0327**
+9. `person_age`: **0.0307**
+10. `person_home_ownership_MORTGAGE`: **0.0267**
+
 ### 3. Libraries Used
 * **Data Manipulation:** `pandas`, `numpy`
 * **Machine Learning:** `scikit-learn`, `imbalanced-learn` (SMOTE)
