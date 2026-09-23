@@ -21,9 +21,6 @@ venv.bak/
 *.pkl
 backend/model/*.pkl
 
-# Datasets
-data/*.csv
-
 # OS generated files
 .DS_Store
 Thumbs.db
